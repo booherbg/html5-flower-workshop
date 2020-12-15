@@ -1,15 +1,6 @@
 /*
 
-   Step 1: Draw a circle
-   Step 2: Animate it (grow)
-   Step 3: Make it move on y-axis
-      First with trail
-      Second with clearing canvas
-   Step 4: Make it wiggle (trig)
-   Step 5: Make it move in a circle
-      First without trail
-      Second with trail
-   Step 6: 
+   Step 3: Make it wiggle, move in a circle
 */
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');

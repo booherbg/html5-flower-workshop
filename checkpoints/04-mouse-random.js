@@ -14,28 +14,26 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let scale = 12; // LEVER: Change this
-let size = 15; // LEVER: Change this
+let scale = 12;
+let size = 15;
 const maxIterations = 500;
 
 // uncomment to reverse the layering operation
-// ctx.globalCompositeOperation = 'destination-over';
-
+ctx.globalCompositeOperation = 'destination-over';
 
 function drawFlower(startX, startY, number, color) {
+   // color = 'blue';
    border = 'white';
 
-   // LEVER: change 1.0 to something else
-   let angle = number * 1;
+   let angle = number * 1.0;
    let radius = scale * Math.sqrt(number);
 
    if (number > maxIterations) return;
-   number = number + 1; // LEVER: change + 1 to something else
+   number++;
 
    let posX = startX + radius * Math.sin(angle);
    let posY = startY + radius * Math.cos(angle);
 
-   // pass in the color from the argument
    ctx.fillStyle = `hsl(${color}, 100%, 50%)`;
    // ctx.fillStyle = `hsl(${(number/maxIterations)*50+300}, 100%, 50%)`;
    // ctx.fillStyle = `hsl(300, ${(number/maxIterations)*100}%), 50%`;
@@ -49,34 +47,17 @@ function drawFlower(startX, startY, number, color) {
    ctx.fill();
    ctx.stroke();
 
-   // Add the current color to the function call but update it a little bit
-   // by adding some value to it. Larger values = more severe gradients
-   // LEVER: Change this
-   color = color + .1
-   requestAnimationFrame(() => drawFlower(startX, startY, number, color));
+   // Pass in the existing startX, startY, number so that we don't
+   // have to keep them as global variables
+   requestAnimationFrame(() => drawFlower(startX, startY, number, color+.1));
 }
 
 // drawFlower();
 function getRelativeCoords(event) {
    const x = event.offsetX || event.layerX;
    const y = event.offsetY || event.layerY;
-
-   // Pass in a random color as the fourth parameter (between 0 and 360)
    drawFlower(x, y, 0, Math.random()*360);
-
-   // Make each click spawn off the same flower but with slightly different
-   // starting numbers (potential for crazy stuff when combined with 
-   // `destination-over` compositing)
-   // drawFlower(x, y, .1, Math.random()*360);
-   // drawFlower(x, y, .2, Math.random()*360);
-   // drawFlower(x, y, .3, Math.random()*360);
-   // drawFlower(x, y, .4, Math.random()*360);
-   // drawFlower(x, y, .5, Math.random()*360);
-   // drawFlower(x, y, .6, Math.random()*360);
-   // drawFlower(x, y, .7, Math.random()*360);
-   // drawFlower(x, y, .8, Math.random()*360);
-   // drawFlower(x, y, .9, Math.random()*360);
-
+   // drawFlower(x, y, 0, Math.random()*10, Math.random()*100);
 }
 
 document.getElementById('canvas').addEventListener('click', getRelativeCoords);
