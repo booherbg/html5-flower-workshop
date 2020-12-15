@@ -16,27 +16,18 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-
-
-let scale = 6;
+let scale = 12;
+let size = 15;
 // let size = 30;
 
-function drawFlower(startX, startY, number, rando, color, size) {
+function drawFlower(startX, startY, number, color) {
    // color = 'blue';
    border = 'white';
 
-   let angle = number * 3;
+   let angle = number * 1.0;
    let radius = scale * Math.sqrt(number);
 
-   if (number > 800) return;
-
-   if (number > 200) {
-      size *= .99;
-      // scale = 12;
-   } else {
-      // scale = 5;
-      size *= 1.01;
-   }
+   if (number > 500) return;
 
    let posX = startX + radius * Math.sin(angle);
    let posY = startY + radius * Math.cos(angle);
@@ -50,7 +41,7 @@ function drawFlower(startX, startY, number, rando, color, size) {
    ctx.fill();
    ctx.stroke();
    // setTimeout(drawFlower, 1);
-   requestAnimationFrame(() => drawFlower(startX, startY, number += 1, rando, color+.2, size));
+   requestAnimationFrame(() => drawFlower(startX, startY, number += 1, color+.1));
 }
 
 // drawFlower();
@@ -58,13 +49,9 @@ function drawFlower(startX, startY, number, rando, color, size) {
 function getRelativeCoords(event) {
    const x = event.offsetX || event.layerX;
    const y = event.offsetY || event.layerY;
-   drawFlower(x, y, 0, Math.random()*3, Math.random()*300, 3);
+   drawFlower(x, y, 0, Math.random()*300);
    // drawFlower(x, y, 0, Math.random()*10, Math.random()*100);
    console.log( x, y );
-   console.log(document.getElementById("canvas").toDataURL());
 }
-
-ctx.globalCompositeOperation = 'destination-over';
-
 
 document.getElementById('canvas').addEventListener('click', getRelativeCoords);
